@@ -1,16 +1,24 @@
-import React from 'react'
+import React, {memo, useEffect, useRef} from 'react'
 
-const ListItem = ({number = 0}: {number?: number}) => {
-  const oldNumber = React.useRef(number)
-  React.useEffect(() => {
+const ListItem = ({
+  debug,
+  number = 0,
+}: {
+  debug: number,
+  number?: number,
+}) => {
+  const oldNumber = useRef(number)
+  useEffect(() => {
     // Can still check `previousProps`, but must be done only when needed
     console.log('useEffect', {
       cur: number,
-      old: oldNumber.current
+      old: oldNumber.current,
     })
+    // Update our prev prop
     oldNumber.current = number
   })
+
   return <div>List Item {`#${number}`}</div>
 }
 
-export default React.memo(ListItem)
+export default memo(ListItem)
